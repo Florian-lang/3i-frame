@@ -6,8 +6,10 @@
 		<title>Plugo</title>
 	</head>
 	<body>
+		<?php include 'header.php'; ?>
 		<main>
 			<?php require $templatePath ?>
 		</main>
+		<?php include 'footer.php'; ?>
 	</body>
 </html>

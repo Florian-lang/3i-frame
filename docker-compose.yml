@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+    php:
+        container_name: ${APP_NAME}-php
+        build:
+            context: ./docker-compose/php
+            dockerfile: .Dockerfile
+        restart: always
+        environment:
+            - MEMORY_LIMIT=512M
+            - POST_MAX_SIZE=20M
+            - UPLOAD_MAX_FILESIZE=20M
+            - MAX_EXECUTION_TIME=300
+            - ERROR_REPORTING=6135
+        volumes:
+            - '.:/var/www/html/${APP_NAME}'
+        working_dir: '/var/www/html/${APP_NAME}'
+        depends_on:
+            - database
+
+    database:
+        container_name: ${APP_NAME}-postgres
+        image: postgres:13-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB:-app}
+            POSTGRES_PASSWORD: ${APP_NAME}
+            POSTGRES_USER: ${APP_NAME}
+        volumes:
+            - db-data:/var/lib/postgresql/data:rw
+        ports:
+            - "15436:5432"
+
+    nginx:
+        container_name: ${APP_NAME}-nginx
+        restart: always
+        build:
+            context: ./docker-compose/nginx
+            dockerfile: .Dockerfile
+        ports:
+            - '8080:80'
+            - '8443:443'
+        volumes:
+            - '.:/var/www/html/${APP_NAME}'
+            - ./docker-compose/nginx/templates/:/etc/nginx/conf.d/
+        environment:
+            - APP_NAME=${APP_NAME}
+        depends_on:
+            - php
+            - database
+volumes:
+    db-data:

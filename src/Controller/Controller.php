@@ -6,7 +6,7 @@ class Controller {
     //Retourne une vue
     protected function view(string $template, array $data = []): string {
 		$templatePath = dirname(__DIR__, 2) . '/templates/' . $template;
-		return require_once dirname(__DIR__, 2) . '/templates/layout.php';
+		return require_once dirname(__DIR__, 2) . '/templates/layouts.php';
 	}
 
     //Redirige

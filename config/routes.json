@@ -1,0 +1,6 @@
+{
+    "/" : {
+        "controller" : "App\\Controller\\MainController",
+        "method" : "home"
+    }
+}

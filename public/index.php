@@ -2,6 +2,6 @@
 
 use iFrame\Router\Router;
 
-require dirname(__DIR__) . '/lib/autoload.php';
+require_once dirname(__DIR__) . '/lib/autoload.php';
 
 new Router();

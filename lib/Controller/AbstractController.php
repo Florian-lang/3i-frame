@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Controller;
+namespace iFrame\Controller;
 
-class Controller
+abstract class AbstractController
 {
     /**
      * @param mixed[] $data
      */
-    protected function view(string $template, array $data = []): string
+    protected function renderView(string $template, array $data = []): string
     {
         $templatePath = dirname(__DIR__, 2) . '/templates/' . $template;
-        return require_once dirname(__DIR__, 2) . '/templates/layouts/app.php';
+        return require_once dirname(__DIR__, 2) . '/templates/main.php';
     }
 
     /**
-     * @param string[] $params
+     * @param array<string> $params
      */
-    protected function redirect(string $path, array $params = []): void
+    protected function redirectToRoute(string $path, array $params = []): void
     {
         $uri = $_SERVER['SCRIPT_NAME'] . "?path=" . $path;
 

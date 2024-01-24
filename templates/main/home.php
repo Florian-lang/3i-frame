@@ -1,1 +1,1 @@
-<h1> <?= $data['content'] ?> </h1>
+<h1 class="text-3xl font-bold underline"> <?= $data['content'] ?> </h1>

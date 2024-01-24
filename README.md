@@ -1,2 +1,8 @@
-# 3i-frame
-3i-frame est un petit framework PHP conçu par 2 étudiants en école d'ingénieur 3iL
+# Charger le css
+Rendez vous à l'intérieur du container php :
+
+    docker exec -it container-name bash
+
+Puis exécuter la commande pour compliler le css :
+
+    npx tailwindcss -i ./assets/css/app.css -o ./assets/css/tailwind.css --watch

@@ -3,6 +3,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Chargement des ressources -->
+        <link rel="stylesheet" href="assets/css/tailwind.css">
+        <script src="assets/js/app.js"></script>
+
 		<title> <?= $data['title'] ?> </title>
 	</head>
 	<body>

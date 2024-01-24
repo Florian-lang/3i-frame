@@ -5,7 +5,7 @@
         "symfony/var-dumper": "^7.0"
     },
     "scripts": {
-        "lint": "vendor/bin/phpstan --memory-limit=-1 analyse src/",
-        "fix": "php-cs-fixer fix src/"
+        "lint": "vendor/bin/phpstan --memory-limit=-1 analyse src/ lib/",
+        "fix": "php-cs-fixer fix src/ && php-cs-fixer fix lib/"
     }
 }

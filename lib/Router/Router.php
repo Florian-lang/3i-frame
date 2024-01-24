@@ -1,62 +1,93 @@
 <?php
+
 namespace iFrame\Router;
 
-require dirname(__DIR__, 2) . '/config/routes.php';
+class Router
+{
+    /**
+     * @var array<array<string, string>>
+     */
+    private array $routes;
 
-class Router{
+    /**
+     * @var array<int, string>
+     */
+    private array $routePaths;
 
-	private $routes;
-	private $availablePaths;
-	private $requestedPath;
+    private string $requestedPath;
 
-	public function __construct() {
-		$this->routes = ROUTES;
-		$this->availablePaths = array_keys($this->routes);
-		$this->requestedPath = isset($_GET['path']) ? $_GET['path'] : '/';
-		$this->parseRoutes();
-	}
+    public function __construct()
+    {
+        $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
 
-	private function parseRoutes(): void {
-		$explodedRequestedPath = $this->explodePath($this->requestedPath);
-		$params = [];
+        if(!is_string($routesFile)) {
+            throw new \Exception('Routes file not found');
+        }
 
-		foreach ($this->availablePaths as $candidatePath) {
+        $routes = json_decode($routesFile, true);
 
-			$foundMatch = true;
-			$explodedCandidatePath = $this->explodePath($candidatePath);
+        if(!is_array($routes)) {
+            throw new \Exception('Routes file is not valid');
+        }
 
-			if (count($explodedCandidatePath) == count($explodedRequestedPath)) {
-				foreach ($explodedRequestedPath as $key => $requestedPathPart) {
-					$candidatePathPart = $explodedCandidatePath[$key];
+        $this->routes = $routes;
+        $this->routePaths = array_keys($this->routes);
+        $this->requestedPath = isset($_GET['path']) ? $_GET['path'] : '/';
+        $this->parseRoutes();
+    }
 
-					if ($this->isParam($candidatePathPart)) {
-						$params[substr($candidatePathPart, 1, -1)] = $requestedPathPart;
-					} else if ($candidatePathPart !== $requestedPathPart) {
-						$foundMatch = false;
-						break;
-					}
-				}
+    private function parseRoutes(): void
+    {
+        $explodedRequestedPath = $this->explodePath($this->requestedPath);
+        $params = [];
 
-				if ($foundMatch) {
-					$route = $this->routes[$candidatePath];
-					break;
-				}
-			}
-		}
+        foreach ($this->routePaths as $routePath) {
 
-		if (isset($route)) {
-			$controller = new $route['controller'];
-			$controller->{$route['method']}(...$params);
-		}
+            $foundMatch = true;
 
-	}
+            $explodedRoutePaths = $this->explodePath($routePath);
 
-	private function explodePath(string $path): array {
-		return explode("/", rtrim(ltrim($path, '/'), '/'));
-	}
+            if (count($explodedRoutePaths) === count($explodedRequestedPath)) {
 
-	private function isParam(string $candidatePathPart): bool {
-		return str_contains($candidatePathPart, '{') && str_contains($candidatePathPart, '}');
-	}
+                foreach ($explodedRequestedPath as $key => $requestedPathPart) {
+                    $candidatePathPart = $explodedRoutePaths[$key];
+
+                    if ($this->isParam($candidatePathPart)) {
+                        $params[substr($candidatePathPart, 1, -1)] = $requestedPathPart;
+                    } elseif ($candidatePathPart !== $requestedPathPart) {
+                        $foundMatch = false;
+                        break;
+                    }
+                }
+
+                if ($foundMatch) {
+                    $route = $this->routes[$routePath];
+
+                    if(is_array($route)) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (isset($route) && is_array($route)) {
+            $controller = new $route['controller']();
+            $controller->{$route['method']}(...$params);
+        }
+
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function explodePath(string $path): array
+    {
+        return explode("/", rtrim(ltrim($path, '/'), '/'));
+    }
+
+    private function isParam(string $candidatePathPart): bool
+    {
+        return str_contains($candidatePathPart, '{') && str_contains($candidatePathPart, '}');
+    }
 
 }

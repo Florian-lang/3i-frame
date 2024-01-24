@@ -2,16 +2,15 @@
 
 namespace App\Controller;
 
-class MainController extends Controller
+use iFrame\Controller\AbstractController;
+
+class MainController extends AbstractController
 {
     public function home(): string
     {
-        return $this->view('main/home.php', ['title' => 'Accueil']);
-    }
-
-    public function contact(): void
-    {
-        // Imaginons ici traiter la soumission d'un formulaire de contact et envoyer un mail...
-        $this->redirect('home', ['state' => 'success']);
+        return $this->renderView('main/home.php', [
+            'title' => 'Accueil',
+            'content' => 'Je suis le contenu de la page',
+        ]);
     }
 }

@@ -13,4 +13,12 @@ class MainController extends AbstractController
             'content' => 'Je suis le contenu de la page',
         ]);
     }
+
+    public function shop(): string
+    {
+        return $this->renderView('main/home.php', [
+            'title' => 'My shop',
+            'content' => 'Yoyoyoy',
+        ]);
+    }
 }

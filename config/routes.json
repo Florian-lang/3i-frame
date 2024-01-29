@@ -1,6 +1,18 @@
 {
     "/" : {
         "controller" : "App\\Controller\\MainController",
-        "method" : "home"
+        "method" : "home",
+        "name" : "app_home"
+    },
+    "/shop" : {
+        "controller" : "App\\Controller\\MainController",
+        "method" : "shop",
+        "name" : "app_shop"
+    },
+    "/notFound" : 
+    {
+        "controller" : "App\\Controller\\ErrorController",
+        "method" : "error_404",
+        "name" : "app_error_404"
     }
 }

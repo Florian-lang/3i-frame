@@ -2,6 +2,8 @@
 
 namespace iFrame\Router;
 
+use Exception;
+
 class Router
 {
     /**
@@ -32,7 +34,25 @@ class Router
 
         $this->routes = $routes;
         $this->routePaths = array_keys($this->routes);
-        $this->requestedPath = isset($_GET['path']) ? $_GET['path'] : '/';
+
+        //On regarde si l'url existe bien, sinon on retourne 404
+        $this->requestedPath = '/';
+        if(isset($_SERVER['REQUEST_URI'])) {
+            $urlExist = false;
+            foreach ($this->routePaths as $route) {
+                if($route === $_SERVER['REQUEST_URI']) {
+                    $this->requestedPath =  $_SERVER['REQUEST_URI'];
+                    $urlExist = true;
+                    break;
+
+                }
+            }
+            if($urlExist === false) {
+                $this->requestedPath = '/notFound';
+            }
+
+        }
+
         $this->parseRoutes();
     }
 
@@ -67,9 +87,9 @@ class Router
                         break;
                     }
                 }
+
             }
         }
-
         if (isset($route) && is_array($route)) {
             $controller = new $route['controller']();
             $controller->{$route['method']}(...$params);
@@ -90,4 +110,31 @@ class Router
         return str_contains($candidatePathPart, '{') && str_contains($candidatePathPart, '}');
     }
 
+    public static function generate(?string $routeName = null): string
+    {
+
+        $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
+
+        if($routesFile === false) {
+            throw new Exception("Fichier non trouvé");
+        }
+
+        /**
+         * @var array<string, array<string>>
+         */
+        $data = json_decode($routesFile, true);
+
+        if($routeName === null) {
+            return '/';
+        }
+
+        foreach ($data as $url => $parameters) {
+            if ($parameters["name"] === $routeName) {
+                return $url;
+            }
+        }
+
+        //TODO : Create view 404
+        return '/notFound';
+    }
 }

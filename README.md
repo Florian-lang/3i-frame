@@ -1,7 +1,7 @@
 # Charger le css
 Rendez vous à l'intérieur du container php :
 
-    docker exec -it container-name bash
+    docker exec -it 3i-frame-php bash
 
 Puis exécuter la commande pour compliler le css :
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace iFrame\EntityManager;
+namespace iFrame\Repository;
 
 use iFrame\Singleton\DatabaseSingleton;
 
-abstract class AbstractEntityManager
+abstract class AbstractRepository
 {
     private function connect(): \PDO
     {

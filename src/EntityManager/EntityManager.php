@@ -2,57 +2,23 @@
 
 namespace App\EntityManager;
 
-use iFrame\EntityManager\AbstractEntityManager;
-use PDOStatement;
+use App\Repository\BaseRepository;
+use iFrame\Singleton\DatabaseSingleton;
 
-class EntityManager extends AbstractEntityManager
+class EntityManager
 {
-    public function find(string $className, int $id): mixed
-    {
-        return $this->readOne($className, [ 'id' => $id ]);
+    public function __construct(
+        private readonly \PDO $connexion = DatabaseSingleton::getInstance()->getConnection()
+    ) {
     }
 
-    /**
-     * @param array<mixed> $filters
-     */
-    public function findOneBy(string $className, array $filters): mixed
+    public function getRepository(string $className): BaseRepository
     {
-        return $this->readOne($className, $filters);
+        return new BaseRepository($className);
     }
 
-    public function findAll(string $className): mixed
+    public function getConnexion(): \PDO
     {
-        return $this->readMany($className);
-    }
-
-    /**
-     * @param array<mixed> $filters
-     * @param array<mixed> $orders
-     */
-    public function findBy(string $className, array $filters, array $orders = [], int $limit = null, int $offset = null): mixed
-    {
-        return $this->readMany($className, $filters, $orders, $limit, $offset);
-    }
-
-    /**
-     * @param array<string, mixed> $classData
-     */
-    public function add(string $className, array $classData): PDOStatement
-    {
-        return $this->create($className, $classData);
-    }
-
-
-    /**
-     * @param array<string, mixed> $classData
-     */
-    public function edit(string $className, int $id, array $classData): PDOStatement
-    {
-        return $this->update($className, $classData, $id);
-    }
-
-    public function delete(string $className, int $id): PDOStatement
-    {
-        return $this->remove($className, $id);
+        return $this->connexion;
     }
 }

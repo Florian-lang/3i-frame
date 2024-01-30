@@ -2,8 +2,16 @@
 
 namespace iFrame\Controller;
 
+use App\EntityManager\EntityManager;
+
 abstract class AbstractController
 {
+    protected EntityManager $em;
+
+    public function __construct() {
+        $this->em = new EntityManager();
+    }
+    
     /**
      * @param mixed[] $data
      */

@@ -4,6 +4,11 @@
         "method" : "home",
         "name" : "app_home"
     },
+    "/login" : {
+        "controller" : "App\\Controller\\AuthController",
+        "method" : "login",
+        "name" : "app_login"
+    },
     "/shop" : {
         "controller" : "App\\Controller\\MainController",
         "method" : "shop",
@@ -15,4 +20,5 @@
         "method" : "error_404",
         "name" : "app_error_404"
     }
+    
 }

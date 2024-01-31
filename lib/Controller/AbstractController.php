@@ -3,6 +3,7 @@
 namespace iFrame\Controller;
 
 use App\EntityManager\EntityManager;
+use iFrame\Router\Router;
 
 abstract class AbstractController
 {
@@ -24,19 +25,20 @@ abstract class AbstractController
     /**
      * @param array<string> $params
      */
-    protected function redirectToRoute(string $path, array $params = []): void
+    protected function redirectToRoute(string $routeName, array $params = []): string
     {
-        $uri = $_SERVER['SCRIPT_NAME'] . "?path=" . $path;
-
+        $path = Router::generate($routeName);
+        
         if (!empty($params)) {
             $strParams = [];
             foreach ($params as $key => $val) {
                 array_push($strParams, urlencode((string) $key) . '=' . urlencode((string) $val));
             }
-            $uri .= '&' . implode('&', $strParams);
+            $path .= '&' . implode('&', $strParams);
         }
-
-        header("Location: " . $uri);
-        die;
+        
+        header("Location: " . $path);
+        
+        return "You have been sucessfully redirected";
     }
 }

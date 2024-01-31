@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use iFrame\Controller\AbstractController;
+use iFrame\Router\Router;
 use iFrame\Singleton\DatabaseSingleton;
 
 class AuthController extends AbstractController
@@ -38,9 +39,7 @@ class AuthController extends AbstractController
 
         if (password_verify($_POST["password"], $usr_db['password'])) {
             //TODO : CREER UNE SESSION
-            var_dump('ggg on crée ta session');
-
-            $this->redirectToRoute("/");
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->renderView('auth/login.php', [
@@ -88,7 +87,7 @@ class AuthController extends AbstractController
         
 
         //TODO : CRÉER UN COMPTE EN BASE DE DONNÉE
-        return "";
+        return $this->redirectToRoute('app_home');
         //TODO : LUI CRÉER LA SESSION
     }
 }

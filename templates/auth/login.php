@@ -9,7 +9,7 @@ use iFrame\Router\Router;
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
             Se connecter 
         </h2>
-        <?php if ($data['error_message']) echo "<p class='text-red-700 text-sm'>".$data['error_message']."</p>"; ?>
+        <?php if (isset($data['error_message'])) echo "<p class='text-red-700 text-sm'>".$data['error_message']."</p>"; ?>
 
         <form class="mt-8 space-y-6" action="<?= Router::generate("app_login")?>" method="POST">
             <div>

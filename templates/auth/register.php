@@ -1,3 +1,7 @@
+<?php
+
+use iFrame\Router\Router;
+?>
 <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
     <a href="" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
         <img src="/images/logo.svg" class="mr-4 h-11" alt="FlowBite Logo">
@@ -8,7 +12,7 @@
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
             S'inscrire
         </h2>
-        <form class="mt-8 space-y-6" action="#">
+        <form class="mt-8 space-y-6" action="<?= Router::generate("app_register")?>" method="POST">
             <div>
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                 <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="name@company.com" required>
@@ -19,7 +23,7 @@
             </div>
             <div>
                 <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmation du mot de passe</label>
-                <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
+                <input type="password" name="confirm_password" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
             </div>
             <div class="flex items-start">
                 <div class="flex items-center h-5">

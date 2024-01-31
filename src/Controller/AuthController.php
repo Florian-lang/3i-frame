@@ -60,7 +60,7 @@ class AuthController extends AbstractController
             ]);
         }
 
-        $query = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        $query = "SELECT * FROM users WHERE email = :email LIMIT 1;";
 
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"]]);
@@ -84,10 +84,15 @@ class AuthController extends AbstractController
             ]);
         }
 
+        $hashPassword = password_hash($_POST["password"],PASSWORD_DEFAULT);
+        $query = "INSERT INTO users (\"email\", \"password\") VALUES (:email, :password);";
+        $requete = $this->em->getConnexion()->prepare($query);
+        $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword]);
         
-
-        //TODO : CRÉER UN COMPTE EN BASE DE DONNÉE
-        return $this->redirectToRoute('app_home');
         //TODO : LUI CRÉER LA SESSION
+
+        return $this->redirectToRoute('app_home');
+        
     }
+
 }

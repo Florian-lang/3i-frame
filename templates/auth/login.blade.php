@@ -5,10 +5,12 @@ use iFrame\Router\Router;
 <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
 
     <!-- Card -->
-    <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+    <div class="w-full max-w-xl p-6 space-y-4 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
             Se connecter 
         </h2>
+        <?php if ($data['error_message']) echo "<p class='text-red-700 text-sm'>".$data['error_message']."</p>"; ?>
+
         <form class="mt-8 space-y-6" action="<?= Router::generate("app_login")?>" method="POST">
             <div>
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>

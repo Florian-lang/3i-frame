@@ -12,9 +12,9 @@ class AuthController extends AbstractController
     {
         if(empty($_POST["email"]) && empty($_POST["password"]))
         {
-            return $this->renderView('auth/login.php', [
-                'title' => 'Erreur 404',
-                'content' => 'Aïe... Nous n\'avons pas trouvé la page.',
+            return $this->renderView('auth/login.blade.php', [
+                'title' => 'Se connecter',
+                'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
             ]);
         }
         
@@ -24,21 +24,28 @@ class AuthController extends AbstractController
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"]]);
         $tab = $requete->fetchAll();
-        //TODO : Si on a aucun retour, alors le rammener sur le formulaire avec un message d'erreur
 
-        //TODO : Si on a un retour mais que le mot de passe ne correspond pas, le rammener sur le formulaire avec un message d'erreur
-
-        //TODO : Si tout est bon, on le connecte.
-
-
-        $usr_db = $tab[0];
-        //
-        if (password_verify($_POST["password"], $tab[0]['password'])) {
-            var_dump('ggg');
+        if(empty($tab))
+        {
+            return $this->renderView('auth/login.blade.php', [
+                'title' => 'Se connecter',
+                'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
+                'error_message' => 'Le compte n\'existe pas.' 
+            ]);
         }
 
-        
-        exit;
+        $usr_db = $tab[0];
+
+        if (password_verify($_POST["password"], $usr_db['password'])) {
+            //TODO : CREER UNE SESSION
+            var_dump('ggg on crée ta session');
+            exit;
+        }
+        return $this->renderView('auth/login.blade.php', [
+            'title' => 'Se connecter',
+            'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
+            'error_message' => 'Le mot de passe est incorrect.' 
+        ]);
         
     }
 }

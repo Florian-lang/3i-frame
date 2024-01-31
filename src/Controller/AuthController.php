@@ -8,7 +8,7 @@ use iFrame\Singleton\DatabaseSingleton;
 
 class AuthController extends AbstractController
 {
-    public function login()
+    public function login(): string
     {
         if(empty($_POST["email"]) && empty($_POST["password"]))
         {
@@ -39,8 +39,10 @@ class AuthController extends AbstractController
         if (password_verify($_POST["password"], $usr_db['password'])) {
             //TODO : CREER UNE SESSION
             var_dump('ggg on crée ta session');
-            exit;
+
+            $this->redirectToRoute("/");
         }
+
         return $this->renderView('auth/login.php', [
             'title' => 'Se connecter',
             'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
@@ -49,7 +51,7 @@ class AuthController extends AbstractController
         
     }
 
-    public function register()
+    public function register(): string
     {
         if(empty($_POST["email"]) && empty($_POST["password"]))
         {
@@ -83,8 +85,10 @@ class AuthController extends AbstractController
             ]);
         }
 
-        //TODO : CRÉER UN COMPTE EN BASE DE DONNÉE
+        
 
+        //TODO : CRÉER UN COMPTE EN BASE DE DONNÉE
+        return "";
         //TODO : LUI CRÉER LA SESSION
     }
 }

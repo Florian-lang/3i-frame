@@ -9,6 +9,11 @@
         "method" : "login",
         "name" : "app_login"
     },
+    "/register" : {
+        "controller" : "App\\Controller\\AuthController",
+        "method" : "register",
+        "name" : "app_register"
+    },
     "/shop" : {
         "controller" : "App\\Controller\\MainController",
         "method" : "shop",

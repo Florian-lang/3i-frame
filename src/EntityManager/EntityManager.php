@@ -4,12 +4,14 @@ namespace App\EntityManager;
 
 use App\Repository\BaseRepository;
 use iFrame\Singleton\DatabaseSingleton;
+use PDO;
 
 class EntityManager
 {
-    public function __construct(
-        private readonly \PDO $connexion = DatabaseSingleton::getInstance()->getConnection()
-    ) {
+    private PDO $connexion;
+
+    public function __construct() {
+        $this->connexion = DatabaseSingleton::getInstance()->getConnection();
     }
 
     public function getRepository(string $className): BaseRepository
@@ -17,7 +19,7 @@ class EntityManager
         return new BaseRepository($className);
     }
 
-    public function getConnexion(): \PDO
+    public function getConnexion(): PDO
     {
         return $this->connexion;
     }

@@ -11,6 +11,11 @@ abstract class AbstractController
 
     public function __construct() {
         $this->em = new EntityManager();
+        if(session_status() === PHP_SESSION_NONE)
+        {
+            session_start();
+        }
+       
     }
     
     /**
@@ -25,7 +30,7 @@ abstract class AbstractController
     /**
      * @param array<string> $params
      */
-    protected function redirectToRoute(string $routeName, array $params = []): string
+    public function redirectToRoute(string $routeName, array $params = []): string
     {
         $path = Router::generate($routeName);
         

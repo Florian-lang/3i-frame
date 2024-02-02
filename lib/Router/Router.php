@@ -2,6 +2,7 @@
 
 namespace iFrame\Router;
 
+use App\Controller\MainController;
 use Exception;
 
 class Router
@@ -20,6 +21,7 @@ class Router
 
     public function __construct()
     {
+        session_start();
         $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
 
         if(!is_string($routesFile)) {
@@ -42,6 +44,12 @@ class Router
             foreach ($this->routePaths as $route) {
                 if($route === $_SERVER['REQUEST_URI']) {
                     $this->requestedPath =  $_SERVER['REQUEST_URI'];
+                    if(isset($_SESSION['login']) && ($_SERVER['REQUEST_URI'] === Router::generate('app_login') || $_SERVER['REQUEST_URI'] === Router::generate('app_register')))
+                    {
+                        $redirection = new MainController();
+                        $redirection->redirectToRoute('app_home');
+                    }
+                    
                     $urlExist = true;
                     break;
 

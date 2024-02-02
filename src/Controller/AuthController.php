@@ -97,13 +97,13 @@ class AuthController extends AbstractController
         
     }
 
-    public function logout()
+    public function logout(): string
     {
         session_unset();
 
         session_destroy();
 
-            return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_login');
     }
 
 }

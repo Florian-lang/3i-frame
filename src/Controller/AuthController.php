@@ -37,7 +37,6 @@ class AuthController extends AbstractController
         $usr_db = $tab[0];
 
         if (password_verify($_POST["password"], $usr_db['password'])) {
-            //TODO : CREER UNE SESSION
             $_SESSION['login'] = $_POST['email'];
 
             return $this->redirectToRoute('app_home');
@@ -87,11 +86,19 @@ class AuthController extends AbstractController
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword]);
 
-
         $_SESSION['login'] = $_POST['email'];
 
         return $this->redirectToRoute('app_home');
 
+    }
+
+    public function logout()
+    {
+        session_unset();
+
+        session_destroy();
+
+            return $this->redirectToRoute('app_login');
     }
 
 }

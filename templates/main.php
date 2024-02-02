@@ -1,3 +1,6 @@
+<?php if(session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -11,10 +14,10 @@
 		<title> <?= $data['title'] ?> </title>
 	</head>
 	<body>
-		<?php if(isset($_SESSION["login"])){ 
+		<?php 
 		 include_once __DIR__."/_header.php";  
-		 include_once __DIR__."/_sidebar.php";
-		}?>
+		 // include_once __DIR__."/_sidebar.php";
+		?>
 		<main>
 			<?php require_once $templatePath ?>
 		</main>

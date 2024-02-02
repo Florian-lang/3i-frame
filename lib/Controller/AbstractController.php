@@ -12,11 +12,6 @@ abstract class AbstractController
     public function __construct()
     {
         $this->em = new EntityManager();
-        if(session_status() === PHP_SESSION_NONE)
-        {
-            session_start();
-        }
-       
     }
 
     /**

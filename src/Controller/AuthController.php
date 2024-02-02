@@ -9,6 +9,7 @@ use iFrame\Singleton\DatabaseSingleton;
 
 class AuthController extends AbstractController
 {
+
     public function login(): string
     {
         if(empty($_POST["email"]) && empty($_POST["password"])) {
@@ -37,6 +38,8 @@ class AuthController extends AbstractController
 
         if (password_verify($_POST["password"], $usr_db['password'])) {
             //TODO : CREER UNE SESSION
+            $_SESSION['login'] = $_POST['email'];
+
             return $this->redirectToRoute('app_home');
         }
 
@@ -84,7 +87,8 @@ class AuthController extends AbstractController
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword]);
 
-        //TODO : LUI CRÉER LA SESSION
+
+        $_SESSION['login'] = $_POST['email'];
 
         return $this->redirectToRoute('app_home');
 

@@ -9,7 +9,6 @@ use iFrame\Singleton\DatabaseSingleton;
 
 class AuthController extends AbstractController
 {
-
     public function login(): string
     {
         if(empty($_POST["email"]) && empty($_POST["password"])) {
@@ -90,6 +89,15 @@ class AuthController extends AbstractController
 
         return $this->redirectToRoute('app_home');
 
+    }
+
+    public function logout(): string
+    {
+        session_unset();
+
+        session_destroy();
+
+        return $this->redirectToRoute('app_login');
     }
 
     public function logout(): string

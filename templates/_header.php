@@ -24,8 +24,8 @@ use iFrame\Router\Router;
             <div id="button-dropdown-profile">
               <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"  aria-expanded="false" data-dropdown-toggle="dropdown-2">
                 <span class="sr-only">Open user menu</span>
-                <?php if(isset($_SESSION["login"])) {?>
-                  <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" id="button-dropdown-profile">
+                <?php if(isset($_SESSION["login"]) && isset($data['user'])) {?>
+                  <img class="w-8 h-8 rounded-full" src=<?= $data['user']->getImage() ?> alt="user photo" id="button-dropdown-profile">
                   <?php } else{ ?>
                     <img class="w-8 h-8 rounded-full"  alt="user photo" id="button-dropdown-profile">
                     <?php }?>

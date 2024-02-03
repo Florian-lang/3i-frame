@@ -12,7 +12,6 @@ abstract class AbstractRepository
         $connexion = $databaseInstance->getConnection();
 
         $connexion->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $connexion->exec("SET NAMES utf8");
 
         return $connexion;
     }

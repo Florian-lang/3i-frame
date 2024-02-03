@@ -9,10 +9,11 @@ abstract class AbstractController
 {
     protected EntityManager $em;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->em = new EntityManager();
     }
-    
+
     /**
      * @param mixed[] $data
      */
@@ -28,7 +29,7 @@ abstract class AbstractController
     protected function redirectToRoute(string $routeName, array $params = []): string
     {
         $path = Router::generate($routeName);
-        
+
         if (!empty($params)) {
             $strParams = [];
             foreach ($params as $key => $val) {
@@ -36,9 +37,9 @@ abstract class AbstractController
             }
             $path .= '&' . implode('&', $strParams);
         }
-        
+
         header("Location: " . $path);
-        
+
         return "You have been sucessfully redirected";
     }
 }

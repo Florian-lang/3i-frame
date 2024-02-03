@@ -10,7 +10,8 @@ class EntityManager
 {
     private PDO $connexion;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->connexion = DatabaseSingleton::getInstance()->getConnection();
     }
 

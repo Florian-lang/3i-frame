@@ -3,6 +3,7 @@
 const ALIASES = [
     'iFrame' => 'lib',
     'App' => 'src',
+    'iFrameMigrations' => 'migrations'
 ];
 
 spl_autoload_register(function (string $class): void {

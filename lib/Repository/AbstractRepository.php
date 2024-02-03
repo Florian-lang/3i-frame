@@ -12,7 +12,6 @@ abstract class AbstractRepository
         $connexion = $databaseInstance->getConnection();
 
         $connexion->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $connexion->exec("SET NAMES utf8");
 
         return $connexion;
     }
@@ -39,7 +38,7 @@ abstract class AbstractRepository
      */
     protected function readOne(string $class, array $filters): mixed
     {
-        $query = 'SELECT * FROM ' . $this->classToTable($class) . ' WHERE ';
+        $query = 'SELECT * FROM "' . $this->classToTable($class) . '" WHERE ';
 
         foreach(array_keys($filters) as $filter) {
             $query .= $filter . " = :" . $filter;
@@ -60,7 +59,7 @@ abstract class AbstractRepository
      */
     protected function readMany(string $class, array $filters = [], array $orders = [], int $limit = null, int $offset = null): mixed
     {
-        $query = 'SELECT * FROM ' . $this->classToTable($class);
+        $query = 'SELECT * FROM "' . $this->classToTable($class) . '"';
         if (!empty($filters)) {
             $query .= ' WHERE ';
 
@@ -132,7 +131,7 @@ abstract class AbstractRepository
      */
     protected function update(string $class, array $fields, int $id): \PDOStatement
     {
-        $query = "UPDATE " . $this->classToTable($class) . " SET ";
+        $query = 'UPDATE "' . $this->classToTable($class) . '" SET ';
 
         foreach (array_keys($fields) as $field) {
             $query .= $field . " = :" . $field;

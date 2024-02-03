@@ -9,6 +9,7 @@ use iFrame\Singleton\DatabaseSingleton;
 
 class AuthController extends AbstractController
 {
+    
     public function login(): string
     {
         if(empty($_POST["email"]) && empty($_POST["password"]))
@@ -38,7 +39,8 @@ class AuthController extends AbstractController
         $usr_db = $tab[0];
 
         if (password_verify($_POST["password"], $usr_db['password'])) {
-            //TODO : CREER UNE SESSION
+            $_SESSION['login'] = $_POST['email'];
+
             return $this->redirectToRoute('app_home');
         }
 
@@ -59,8 +61,8 @@ class AuthController extends AbstractController
                 'content' => 'Veuillez créer vos identifiants.',
             ]);
         }
-
-        $query = "SELECT * FROM users WHERE email = :email LIMIT 1;";
+        
+        $query = "SELECT * FROM \"user\" WHERE email = :email LIMIT 1;";
 
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"]]);
@@ -85,14 +87,23 @@ class AuthController extends AbstractController
         }
 
         $hashPassword = password_hash($_POST["password"],PASSWORD_DEFAULT);
-        $query = "INSERT INTO users (\"email\", \"password\") VALUES (:email, :password);";
+        $query = "INSERT INTO \"user\" (\"email\", \"password\",\"name\") VALUES (:email, :password, :name);";
         $requete = $this->em->getConnexion()->prepare($query);
-        $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword]);
+        $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword, "name" => "toto"]);
         
-        //TODO : LUI CRÉER LA SESSION
+        $_SESSION['login'] = $_POST['email'];
 
         return $this->redirectToRoute('app_home');
         
+    }
+
+    public function logout(): string
+    {
+        session_unset();
+
+        session_destroy();
+
+        return $this->redirectToRoute('app_login');
     }
 
 }

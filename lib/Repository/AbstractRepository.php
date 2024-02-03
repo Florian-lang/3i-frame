@@ -131,7 +131,7 @@ abstract class AbstractRepository
      */
     protected function update(string $class, array $fields, int $id): \PDOStatement
     {
-        $query = "UPDATE " . $this->classToTable($class) . " SET ";
+        $query = 'UPDATE "' . $this->classToTable($class) . '" SET ';
 
         foreach (array_keys($fields) as $field) {
             $query .= $field . " = :" . $field;

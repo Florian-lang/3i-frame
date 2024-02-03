@@ -22,3 +22,5 @@ node_modules/
 /fuel/app/config/crypt.php
 
 .php-cs-fixer.cache
+
+assets/images_upload

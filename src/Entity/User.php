@@ -29,7 +29,7 @@ class User
     public function setEmail(string $email): self
     {
         $this->email = $email;
-        
+
         return $this;
     }
 
@@ -62,7 +62,7 @@ class User
         return $this->image;
     }
 
-    public function setImage(?string $image) : self
+    public function setImage(?string $image): self
     {
         $this->image = $image;
         var_dump($image);

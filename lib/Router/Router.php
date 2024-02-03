@@ -43,13 +43,17 @@ class Router
             foreach ($this->routePaths as $route) {
                 if($route === $_SERVER['REQUEST_URI']) {
                     $this->requestedPath =  $_SERVER['REQUEST_URI'];
-               
-                    if(isset($_SESSION['login']) && ($_SERVER['REQUEST_URI'] === Router::generate('app_login') || $_SERVER['REQUEST_URI'] === Router::generate('app_register')))
-                    {
+
+                    if(isset($_SESSION['login'])
+                        && (
+                            $_SERVER['REQUEST_URI'] === Router::generate('app_login')
+                            || $_SERVER['REQUEST_URI'] === Router::generate('app_register')
+                        )
+                    ) {
                         $redirection = new MainController();
                         $redirection->redirectToRoute('app_home');
                     }
-                    
+
                     $urlExist = true;
                     break;
 

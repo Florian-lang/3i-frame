@@ -6,3 +6,6 @@ migration-migrate:
 
 migration-rollback:
 	docker exec 3i-frame-php php src/Command/MigrateCommand.php prev
+
+migration-setup:
+	docker exec 3i-frame-php php src/Command/MigrateCommand.php setup

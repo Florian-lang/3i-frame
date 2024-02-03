@@ -8,7 +8,11 @@ Puis exécuter la commande pour compliler le css :
     npx tailwindcss -i ./assets/css/app.css -o ./assets/css/tailwind.css --watch
 
 # Exécuter les migrations
-Pour lancer les migrations faire la commande :
+Pour setup les migrations :
+
+    make migration-setup
+
+Pour lancer les migrations :
 
     make migration-migrate
 

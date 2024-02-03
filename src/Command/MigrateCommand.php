@@ -21,6 +21,11 @@ $migrationFiles = array_values(array_filter($data, function ($file) {
     return pathinfo($file, PATHINFO_EXTENSION) === 'php';
 }));
 
+if (isset($argv[1]) && $argv[1] === 'setup') {
+    setUpMigrations();
+    exit;
+}
+
 if (isset($argv[1]) && $argv[1] === 'prev') {
     rollbackMigration();
     exit;
@@ -112,4 +117,24 @@ function runMigration(array $migrationFiles, array $migrationsDone): bool
     }
 
     return $hasMigrations;
+}
+
+function setUpMigrations(): void
+{
+    $sql = DatabaseSingleton::getInstance()
+        ->getConnection()
+        ->query(
+            'CREATE TABLE public.migration (
+            id serial4 NOT NULL,
+            "name" varchar(255) NOT NULL,
+            CONSTRAINT migration_pkey PRIMARY KEY (id))'
+        )
+    ;
+
+    if(!$sql instanceof \PDOStatement) {
+        echo "Error setting up migrations.\n";
+        exit;
+    }
+
+    echo "Migrations set up successfully.\n";
 }

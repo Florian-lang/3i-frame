@@ -20,8 +20,7 @@ abstract class AbstractController
     protected function renderView(string $template, array $data = []): string
     {
         $templatePath = dirname(__DIR__, 2) . '/templates/' . $template;
-        if($template === "auth/register.php" || $template ===  "auth/login.php")
-        {
+        if($template === "auth/register.php" || $template ===  "auth/login.php") {
             return require_once $templatePath;
 
         }

@@ -10,7 +10,7 @@ class UserController extends AbstractController
     public function profile(): string
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
-        
+
         if($user instanceof User) {
             return $this->renderView('main/profile.php', [
                 'title' => 'Mon profil',
@@ -25,7 +25,7 @@ class UserController extends AbstractController
     public function inputImage(): string
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
-        
+
         if($user instanceof User) {
             // Vérifiez si le fichier a été correctement téléchargé
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -37,11 +37,11 @@ class UserController extends AbstractController
                 move_uploaded_file($tmpFilePath, $newFilePath);
 
                 // Mettez à jour le chemin de l'image dans l'entité User
-                $this->em->getRepository(User::class)->edit($user->getId(),["image" => $newFilePath]);
+                $this->em->getRepository(User::class)->edit($user->getId(), ["image" => $newFilePath]);
                 $user->setImage($newFilePath);
             }
             var_dump('iciii');
-            
+
         }
 
         $this->redirectToRoute('app_profile');

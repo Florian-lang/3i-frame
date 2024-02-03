@@ -38,7 +38,7 @@ abstract class AbstractRepository
      */
     protected function readOne(string $class, array $filters): mixed
     {
-        $query = 'SELECT * FROM ' . $this->classToTable($class) . ' WHERE ';
+        $query = 'SELECT * FROM "' . $this->classToTable($class) . '" WHERE ';
 
         foreach(array_keys($filters) as $filter) {
             $query .= $filter . " = :" . $filter;
@@ -59,7 +59,7 @@ abstract class AbstractRepository
      */
     protected function readMany(string $class, array $filters = [], array $orders = [], int $limit = null, int $offset = null): mixed
     {
-        $query = 'SELECT * FROM ' . $this->classToTable($class);
+        $query = 'SELECT * FROM "' . $this->classToTable($class) . '"';
         if (!empty($filters)) {
             $query .= ' WHERE ';
 

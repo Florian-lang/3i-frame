@@ -65,7 +65,7 @@ class User
     public function setImage(?string $image) : self
     {
         $this->image = $image;
-
+        var_dump($image);
         return $this;
     }
 }

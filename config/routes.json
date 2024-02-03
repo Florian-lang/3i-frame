@@ -4,6 +4,16 @@
         "method" : "home",
         "name" : "app_home"
     },
+    "/profile" : {
+        "controller" : "App\\Controller\\UserController",
+        "method" : "profile",
+        "name" : "app_profile"
+    },
+    "/profile/image" : {
+        "controller" : "App\\Controller\\UserController",
+        "method" : "inputImage",
+        "name" : "app_profile_image"
+    },
     "/login" : {
         "controller" : "App\\Controller\\AuthController",
         "method" : "login",

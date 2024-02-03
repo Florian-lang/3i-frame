@@ -13,12 +13,12 @@
 		<script src="../assets/js/app.js"></script>
 		<title> <?= $data['title'] ?> </title>
 	</head>
-	<body>
+	<body class="w-10/12 ml-64 mt-12">
 		<?php 
 		 include_once __DIR__."/_header.php";  
-		 // include_once __DIR__."/_sidebar.php";
+		 include_once __DIR__."/_sidebar.php";
 		?>
-		<main>
+		<main class="">
 			<?php require_once $templatePath ?>
 		</main>
 	</body>

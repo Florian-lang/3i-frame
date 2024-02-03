@@ -41,5 +41,6 @@ class MainController extends AbstractController
             ]);
         }
         $this->redirectToRoute('app_error_404');
+        return "";
     }
 }

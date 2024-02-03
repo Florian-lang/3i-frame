@@ -99,14 +99,4 @@ class AuthController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
-
-    public function logout(): string
-    {
-        session_unset();
-
-        session_destroy();
-
-        return $this->redirectToRoute('app_login');
-    }
-
 }

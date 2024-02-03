@@ -11,7 +11,7 @@ class DatabaseSingleton
     private PDO $connection;
 
     private const DB_INFOS = [
-        'host'     => '3i-frame-postgres', // Mettre son addresse IP wifi
+        'host'     => '3i-frame-postgres',
         'port'     => '5432',
         'dbname'   => 'app',
         'username' => '3i-frame',

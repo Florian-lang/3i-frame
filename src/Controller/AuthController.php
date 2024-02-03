@@ -9,30 +9,27 @@ use iFrame\Singleton\DatabaseSingleton;
 
 class AuthController extends AbstractController
 {
-    
     public function login(): string
     {
-        if(empty($_POST["email"]) && empty($_POST["password"]))
-        {
+        if(empty($_POST["email"]) && empty($_POST["password"])) {
             return $this->renderView('auth/login.php', [
                 'title' => 'Se connecter',
                 'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
             ]);
         }
-        
-        
+
+
         $query = "SELECT * FROM users WHERE email = :email LIMIT 1";
 
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"]]);
         $tab = $requete->fetchAll();
 
-        if(empty($tab))
-        {
+        if(empty($tab)) {
             return $this->renderView('auth/login.php', [
                 'title' => 'Se connecter',
                 'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
-                'error_message' => 'Le compte n\'existe pas.' 
+                'error_message' => 'Le compte n\'existe pas.'
             ]);
         }
 
@@ -47,29 +44,27 @@ class AuthController extends AbstractController
         return $this->renderView('auth/login.php', [
             'title' => 'Se connecter',
             'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
-            'error_message' => 'Le mot de passe est incorrect.' 
+            'error_message' => 'Le mot de passe est incorrect.'
         ]);
-        
+
     }
 
     public function register(): string
     {
-        if(empty($_POST["email"]) && empty($_POST["password"]))
-        {
+        if(empty($_POST["email"]) && empty($_POST["password"])) {
             return $this->renderView('auth/register.php', [
                 'title' => 'S\'inscrire',
                 'content' => 'Veuillez créer vos identifiants.',
             ]);
         }
-        
+
         $query = "SELECT * FROM \"user\" WHERE email = :email LIMIT 1;";
 
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"]]);
         $tab = $requete->fetchAll();
 
-        if(empty($tab) === false)
-        {
+        if(empty($tab) === false) {
             return $this->renderView('auth/register.php', [
                 'title' => 'S\'inscrire',
                 'content' => 'Veuillez créer vos identifiants.',
@@ -77,8 +72,7 @@ class AuthController extends AbstractController
             ]);
         }
 
-        if($_POST["password"] !== $_POST["confirm_password"])
-        {
+        if($_POST["password"] !== $_POST["confirm_password"]) {
             return $this->renderView('auth/register.php', [
                 'title' => 'S\'inscrire',
                 'content' => 'Veuillez créer vos identifiants.',
@@ -90,11 +84,11 @@ class AuthController extends AbstractController
         $query = "INSERT INTO \"user\" (\"email\", \"password\",\"name\") VALUES (:email, :password, :name);";
         $requete = $this->em->getConnexion()->prepare($query);
         $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword, "name" => "toto"]);
-        
+
         $_SESSION['login'] = $_POST['email'];
 
         return $this->redirectToRoute('app_home');
-        
+
     }
 
     public function logout(): string
@@ -105,5 +99,4 @@ class AuthController extends AbstractController
 
         return $this->redirectToRoute('app_login');
     }
-
 }

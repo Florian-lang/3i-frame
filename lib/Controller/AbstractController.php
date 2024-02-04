@@ -3,6 +3,8 @@
 namespace iFrame\Controller;
 
 use App\EntityManager\EntityManager;
+use iFrame\Entity\RedirectResponse;
+use iFrame\Entity\Response;
 use iFrame\Router\Router;
 
 abstract class AbstractController
@@ -17,20 +19,30 @@ abstract class AbstractController
     /**
      * @param mixed[] $data
      */
-    protected function renderView(string $template, array $data = []): string
+    protected function renderView(string $template, array $data = []): Response
     {
         $templatePath = dirname(__DIR__, 2) . '/templates/' . $template;
-        if($template === "auth/register.php" || $template ===  "auth/login.php") {
-            return require_once $templatePath;
+        ob_start();
 
+        if($template === "auth/register.php" || $template ===  "auth/login.php") {
+            require_once $templatePath;
+        } else {
+            require_once dirname(__DIR__, 2) . '/templates/main.php';
         }
-        return require_once dirname(__DIR__, 2) . '/templates/main.php';
+
+        $content = ob_get_clean();
+
+        if(!$content) {
+            throw new \Exception('Template not found');
+        }
+
+        return new Response($content);
     }
 
     /**
      * @param array<string> $params
      */
-    public function redirectToRoute(string $routeName, array $params = []): string
+    public function redirectToRoute(string $routeName, array $params = []): RedirectResponse
     {
         $path = Router::generate($routeName);
 
@@ -42,8 +54,6 @@ abstract class AbstractController
             $path .= '&' . implode('&', $strParams);
         }
 
-        header("Location: " . $path);
-
-        return "You have been sucessfully redirected";
+        return new RedirectResponse($path);
     }
 }

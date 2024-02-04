@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use iFrame\Controller\AbstractController;
+use iFrame\Entity\Response;
 
 class UserController extends AbstractController
 {
-    public function profile(): string
+    public function profile(): Response
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
 
@@ -18,8 +19,8 @@ class UserController extends AbstractController
                 'user' => $user
             ]);
         }
-        $this->redirectToRoute('app_error_404');
-        return "";
+
+        return $this->redirectToRoute('app_error_404');
     }
 
     public function inputImage(): string

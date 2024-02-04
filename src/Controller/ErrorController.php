@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use iFrame\Controller\AbstractController;
+use iFrame\Entity\Response;
 
 class ErrorController extends AbstractController
 {
-    public function error_404(): string
+    public function error404(): Response
     {
         return $this->renderView('errors/error_404.php', [
             'title' => 'Erreur 404',

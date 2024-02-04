@@ -1,17 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    function openClose(elementId) {
-        let element = document.getElementById(elementId);
+// This is the main entry point of our application
+// We'll only include all the components we create in this file
 
-        // Si l'élément est actuellement caché, l'ouvrir
-        if (element.style.display === 'none' || element.style.display === '') {
-            element.style.display = 'block';
-        } else {
-            element.style.display = 'none'; // Sinon, fermer l'élément
-        }
-    }
-
-
-    document.getElementById('button-dropdown-profile').onclick = () => {
-        openClose('dropdown-profile')
-    }
-})();
+import './component/home.js';

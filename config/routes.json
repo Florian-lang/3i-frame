@@ -34,11 +34,11 @@
         "method" : "shop",
         "name" : "app_shop"
     },
-    "/notFound" : 
+    "/notFound" :
     {
         "controller" : "App\\Controller\\ErrorController",
-        "method" : "error_404",
+        "method" : "error404",
         "name" : "app_error_404"
     }
-    
+
 }

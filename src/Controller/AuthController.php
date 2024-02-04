@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use iFrame\Controller\AbstractController;
-use iFrame\Router\Router;
-use iFrame\Singleton\DatabaseSingleton;
+use iFrame\Entity\RedirectResponse;
+use iFrame\Entity\Response;
 
 class AuthController extends AbstractController
 {
-    public function login(): string
+    public function login(): Response
     {
         if(empty($_POST["email"]) && empty($_POST["password"])) {
             return $this->renderView('auth/login.php', [
@@ -49,7 +48,7 @@ class AuthController extends AbstractController
 
     }
 
-    public function register(): string
+    public function register(): Response
     {
         if(empty($_POST["email"]) && empty($_POST["password"])) {
             return $this->renderView('auth/register.php', [
@@ -91,7 +90,7 @@ class AuthController extends AbstractController
 
     }
 
-    public function logout(): string
+    public function logout(): RedirectResponse
     {
         session_unset();
 

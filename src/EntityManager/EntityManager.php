@@ -17,7 +17,18 @@ class EntityManager
 
     public function getRepository(string $className): BaseRepository
     {
-        return new BaseRepository($className);
+        $repository = $className . 'Repository.php';
+
+        if (!file_exists($repository)) {
+            return new BaseRepository($className);
+        }
+
+        /**
+         * @var BaseRepository
+         */
+        $customRepository = new $repository($className);
+
+        return $customRepository;
     }
 
     public function getConnexion(): PDO

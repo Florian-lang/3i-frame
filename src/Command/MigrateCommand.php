@@ -10,6 +10,10 @@ echo "Starting the migration...\n";
 
 $folder = 'migrations/';
 
+if(file_exists($folder) === false)
+{
+    mkdir($folder);
+}
 $data = scandir($folder);
 
 if(!is_array($data)) {

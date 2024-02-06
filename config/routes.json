@@ -14,6 +14,16 @@
         "method" : "inputImage",
         "name" : "app_profile_image"
     },
+    "/profile/user" : {
+        "controller" : "App\\Controller\\UserController",
+        "method" : "inputProfile",
+        "name" : "app_profile_user"
+    },
+    "/profile/password" : {
+        "controller" : "App\\Controller\\UserController",
+        "method" : "inputPassword",
+        "name" : "app_password_user"
+    },
     "/login" : {
         "controller" : "App\\Controller\\AuthController",
         "method" : "login",

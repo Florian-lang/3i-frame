@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use iFrame\Controller\AbstractController;
 use iFrame\Entity\RedirectResponse;
 use iFrame\Entity\Response;
@@ -17,33 +18,26 @@ class AuthController extends AbstractController
             ]);
         }
 
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_POST['email']]);
 
-        $query = "SELECT * FROM users WHERE email = :email LIMIT 1";
+        if($user instanceof User) {
 
-        $requete = $this->em->getConnexion()->prepare($query);
-        $requete->execute(["email" => $_POST["email"]]);
-        $tab = $requete->fetchAll();
+            if (password_verify($_POST["password"], $user->getPassword())) {
+                $_SESSION['login'] = $_POST['email'];
+                return $this->redirectToRoute('app_home');
+            }
 
-        if(empty($tab)) {
             return $this->renderView('auth/login.php', [
                 'title' => 'Se connecter',
                 'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
-                'error_message' => 'Le compte n\'existe pas.'
+                'error_message' => 'Le mot de passe est incorrect.'
             ]);
-        }
-
-        $usr_db = $tab[0];
-
-        if (password_verify($_POST["password"], $usr_db['password'])) {
-            $_SESSION['login'] = $_POST['email'];
-
-            return $this->redirectToRoute('app_home');
         }
 
         return $this->renderView('auth/login.php', [
             'title' => 'Se connecter',
             'content' => 'Veuillez saisir votre identifiant et mot de passe pour se connecter.',
-            'error_message' => 'Le mot de passe est incorrect.'
+            'error_message' => 'Le compte n\'existe pas.'
         ]);
 
     }

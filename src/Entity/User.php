@@ -51,24 +51,24 @@ class User
         return $this;
     }
 
-    public function getFirstName(): string
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
 
-    public function setFirstName(string $firstname): self
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getLasttName(): string
+    public function getLastname(): string
     {
         return $this->lastname;
     }
 
-    public function setLastName(string $lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 

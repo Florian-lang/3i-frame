@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use iFrame\Controller\AbstractController;
+use iFrame\Entity\RedirectResponse;
 use iFrame\Entity\Response;
 
 class UserController extends AbstractController
@@ -23,7 +24,25 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_error_404');
     }
 
-    public function inputImage(): string
+    public function inputProfile(): RedirectResponse
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
+        if($user instanceof User) {                     
+            $this->em->getRepository(User::class)->edit($user->getId(), [
+                "firstname" => $_POST['firstname'],
+                "lastname" => $_POST['lastname'],
+                "city" => $_POST['city'],
+                "address" => $_POST['address'],
+                "country" => $_POST['country'],
+                "postal_code" => $_POST['postal_code'],
+                "phone" =>  $_POST['phone'],
+            ]);
+
+        }
+        return $this->redirectToRoute('app_profile');  
+    }
+
+    public function inputImage(): RedirectResponse
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
         if($user instanceof User) {         
@@ -39,11 +58,23 @@ class UserController extends AbstractController
                 $this->em->getRepository(User::class)->edit($user->getId(), ["image" => $newFilePath]);
                 $user->setImage($newFilePath);
             }
-            var_dump('iciii');
-
+           
         }
 
-        $this->redirectToRoute('app_profile');
-        return "";
+        return $this->redirectToRoute('app_profile');  
+    }
+
+    public function inputPassword(): RedirectResponse
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
+        if($user instanceof User) {       
+            if($_POST["new_password"] === $_POST["confirm_password"] && password_verify($_POST["current_password"], $user->getPassword()))
+            {
+                $this->em->getRepository(User::class)->edit($user->getId(), [
+                    "password" => password_hash($_POST["new_password"], PASSWORD_DEFAULT),
+                ]);
+            }              
+        }
+        return $this->redirectToRoute('app_profile');  
     }
 }

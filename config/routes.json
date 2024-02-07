@@ -24,6 +24,11 @@
         "method" : "inputPassword",
         "name" : "app_password_user"
     },
+    "/product" : {
+        "controller" : "App\\Controller\\ProductController",
+        "method" : "home",
+        "name" : "app_product"
+    },
     "/login" : {
         "controller" : "App\\Controller\\AuthController",
         "method" : "login",

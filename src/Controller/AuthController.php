@@ -76,7 +76,7 @@ class AuthController extends AbstractController
         $hashPassword = password_hash($_POST["password"], PASSWORD_DEFAULT);
         $query = "INSERT INTO \"user\" (\"email\", \"password\",\"firstname\",\"lastname\") VALUES (:email, :password, :firstname, :lastname);";
         $requete = $this->em->getConnexion()->prepare($query);
-        $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword, "firstname" => $_POST["firstname"], "lastname" =>$_POST["lastname"]]);
+        $requete->execute(["email" => $_POST["email"], "password"  => $hashPassword, "firstname" => $_POST["firstname"], "lastname" => $_POST["lastname"]]);
 
         $_SESSION['login'] = $_POST['email'];
 

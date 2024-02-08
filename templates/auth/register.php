@@ -60,6 +60,7 @@ use iFrame\Router\Router;
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                     Already have an account? <a href="#" class="text-primary-700 hover:underline dark:text-primary-500">Login here</a>
                 </div>
+                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             </form>
         </div>
     </div>

@@ -7,5 +7,8 @@
     "scripts": {
         "lint": "vendor/bin/phpstan --memory-limit=-1 analyse src/ lib/",
         "fix": "php-cs-fixer fix src/ && php-cs-fixer fix lib/"
+    },
+    "require": {
+        "filp/whoops": "^2.15"
     }
 }

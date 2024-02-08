@@ -10,8 +10,7 @@ echo "Starting the migration...\n";
 
 $folder = 'migrations/';
 
-if(file_exists($folder) === false)
-{
+if(file_exists($folder) === false) {
     mkdir($folder);
 }
 $data = scandir($folder);

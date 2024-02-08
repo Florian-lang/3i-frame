@@ -24,3 +24,8 @@ Pour annuler une migration :
 
     make migration-rollback
 
+# Ajouter la sécurité avec un jeton CSRF
+Lors de la création d'un formulaire, rajouter la ligne :
+
+```<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>"> ```
+

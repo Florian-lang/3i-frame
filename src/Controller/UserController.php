@@ -27,7 +27,7 @@ class UserController extends AbstractController
     public function inputProfile(): RedirectResponse
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
-        if($user instanceof User) {                     
+        if($user instanceof User) {
             $this->em->getRepository(User::class)->edit($user->getId(), [
                 "firstname" => $_POST['firstname'],
                 "lastname" => $_POST['lastname'],
@@ -39,13 +39,13 @@ class UserController extends AbstractController
             ]);
 
         }
-        return $this->redirectToRoute('app_profile');  
+        return $this->redirectToRoute('app_profile');
     }
 
     public function inputImage(): RedirectResponse
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
-        if($user instanceof User) {         
+        if($user instanceof User) {
             // Vérifiez si le fichier a été correctement téléchargé
             if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                 // Obtenez le chemin temporaire du fichier téléchargé
@@ -53,28 +53,27 @@ class UserController extends AbstractController
 
                 // Déplacez le fichier vers l'emplacement souhaité (par exemple, le répertoire des images de profil)
                 $newFilePath = './assets/images_upload/' . basename($_FILES['image']['name']);
-                move_uploaded_file($tmpFilePath, $newFilePath);               
+                move_uploaded_file($tmpFilePath, $newFilePath);
                 // Mettez à jour le chemin de l'image dans l'entité User
                 $this->em->getRepository(User::class)->edit($user->getId(), ["image" => $newFilePath]);
                 $user->setImage($newFilePath);
             }
-           
+
         }
 
-        return $this->redirectToRoute('app_profile');  
+        return $this->redirectToRoute('app_profile');
     }
 
     public function inputPassword(): RedirectResponse
     {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
-        if($user instanceof User) {       
-            if($_POST["new_password"] === $_POST["confirm_password"] && password_verify($_POST["current_password"], $user->getPassword()))
-            {
+        if($user instanceof User) {
+            if($_POST["new_password"] === $_POST["confirm_password"] && password_verify($_POST["current_password"], $user->getPassword())) {
                 $this->em->getRepository(User::class)->edit($user->getId(), [
                     "password" => password_hash($_POST["new_password"], PASSWORD_DEFAULT),
                 ]);
-            }              
+            }
         }
-        return $this->redirectToRoute('app_profile');  
+        return $this->redirectToRoute('app_profile');
     }
 }

@@ -11,7 +11,7 @@ final class Version20240204154210 extends AbstractMigration {
 
     public function up() : void
     {
-        $query = "CREATE TABLE \"user\" (
+        $this->addSql("CREATE TABLE \"user\" (
             id SERIAL PRIMARY KEY,
             email VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
@@ -22,19 +22,12 @@ final class Version20240204154210 extends AbstractMigration {
             city VARCHAR(255),
             postal_code VARCHAR(20),
             phone VARCHAR(20),
-            image VARCHAR(255)
-            );";
-
-            $requete = $this->em->getConnexion()->prepare($query);
-            $requete->execute();
-
+            image VARCHAR(255));"
+        );
     }
 
     public function down() : void
-    {   
-        $query = "DROP TABLE IF EXIST \"user\";";
-        $requete = $this->em->getConnexion()->prepare($query);
-        $requete->execute();
-
+    {
+        $this->addSql("DROP TABLE \"user\";");
     }
 }

@@ -1,5 +1,9 @@
-<div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
-<div class="mb-4 col-span-full xl:mb-2">
+<?php
+
+use iFrame\Router\Router;
+?>
+<div class="grid grid-cols-1 px-4 mx-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+    <div class="mb-4 col-span-full xl:mb-2">
         <nav class="flex mb-5" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
                 <li class="inline-flex items-center">
@@ -28,6 +32,29 @@
                 </li>
             </ol>
         </nav>
+        <div class="flex justify-between">
         <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Produits</h1>
+        <a href="<?= Router::generate('app_product_create') ?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ajouter un produit</a>
+        </div>
+        <div class="grid grid-cols-4 gap-4 my-4">
+            <?php foreach ($data['products'] as $product) { ?>
+                <div class="w-full h-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <a href="#">
+                        <img class="rounded-t-lg w-64 h-64 object-contain" src="<?= $product->getImage() ?>" alt="product image" />
+                    </a>
+                    <div class="px-5 pb-5">
+                        <a href="#">
+                            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product->getName() ?></h5>
+                        </a>
+
+                        <div class="flex items-center justify-between mt-4">
+                            <span class="text-3xl font-bold text-gray-900 dark:text-white"><?= $product->getPrice()."€" ?></span>
+                            <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+            <?php } ?>
+        </div>
     </div>
 </div>

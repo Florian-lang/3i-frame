@@ -28,6 +28,8 @@ final class Version20240207145122 extends AbstractMigration {
     public function down() : void
     {
         // this down() migration is auto-generated, please modify it to your needs
-
+        $query = "DROP TABLE IF EXIST \"product\";";
+        $requete = $this->em->getConnexion()->prepare($query);
+        $requete->execute();
     }
 }

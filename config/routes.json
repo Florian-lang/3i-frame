@@ -29,6 +29,11 @@
         "method" : "home",
         "name" : "app_product"
     },
+    "/product/create" : {
+        "controller" : "App\\Controller\\ProductController",
+        "method" : "createProduct",
+        "name" : "app_product_create"
+    },
     "/login" : {
         "controller" : "App\\Controller\\AuthController",
         "method" : "login",

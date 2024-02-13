@@ -29,6 +29,11 @@
         "method" : "home",
         "name" : "app_product"
     },
+    "/product/detail" : {
+        "controller" : "App\\Controller\\ProductController",
+        "method" : "description",
+        "name" : "app_product"
+    },
     "/product/create" : {
         "controller" : "App\\Controller\\ProductController",
         "method" : "createProduct",

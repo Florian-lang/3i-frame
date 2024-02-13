@@ -49,4 +49,19 @@ class ProductController extends AbstractController
 
     }
 
+    public function description(): Response{
+        $product = $this->em->getRepository(Product::class)->find($_GET['id']);
+
+        if($product instanceof Product)
+        {
+            return $this->renderView('product/description.php', [
+                'title' => 'Accueil',
+                'content' => 'Je suis le contenu de la page',
+                'product' => $product
+            ]);
+        }
+        
+        return $this->redirectToRoute('app_error_404');
+    }
+
 }

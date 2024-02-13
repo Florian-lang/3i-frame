@@ -127,11 +127,19 @@ class Router
         return str_contains($candidatePathPart, '{') && str_contains($candidatePathPart, '}');
     }
 
-    public static function generate(?string $routeName = null): string
+    /**
+     * @param mixed[] $parameters
+     */
+    public static function generate(?string $routeName = null,array $parameters = []): string
     {
 
         $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
 
+        $params = "?";
+        foreach($parameters as $key => $value)
+        {
+            $params.='&'.$key.'='.$value;
+        }
         if($routesFile === false) {
             throw new Exception("Fichier non trouvé");
         }
@@ -147,7 +155,7 @@ class Router
 
         foreach ($data as $url => $parameters) {
             if ($parameters["name"] === $routeName) {
-                return $url;
+                return $url.$params;
             }
         }
 

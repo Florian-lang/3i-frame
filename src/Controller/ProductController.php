@@ -31,8 +31,8 @@ class ProductController extends AbstractController
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $tmpFilePath = $_FILES['image']['tmp_name'];
 
-            $newFilePath = './assets/images_upload/products/' . basename($_FILES['image']['name']);
-            move_uploaded_file($tmpFilePath, $newFilePath);               
+            $newFilePath = 'products/' . basename($_FILES['image']['name']);
+            move_uploaded_file($tmpFilePath, ASSET_IMAGE.$newFilePath);               
             
         }
        

@@ -40,14 +40,18 @@ class Router
         $this->requestedPath = '/';
         if(isset($_SERVER['REQUEST_URI'])) {
             $urlExist = false;
+            //Enlever les potentiels GET dans l'URI
+            $arrayUri = explode("?",$_SERVER['REQUEST_URI']);
+            $requestUri = $arrayUri[0];
             foreach ($this->routePaths as $route) {
-                if($route === $_SERVER['REQUEST_URI']) {
-                    $this->requestedPath =  $_SERVER['REQUEST_URI'];
+        
+                if($route === $requestUri) {
+                    $this->requestedPath =  $requestUri;
 
                     if(isset($_SESSION['login'])
                         && (
-                            $_SERVER['REQUEST_URI'] === Router::generate('app_login')
-                            || $_SERVER['REQUEST_URI'] === Router::generate('app_register')
+                            $requestUri === Router::generate('app_login')
+                            || $requestUri === Router::generate('app_register')
                         )
                     ) {
                         $redirection = new MainController();
@@ -59,6 +63,7 @@ class Router
 
                 }
             }
+         
             if($urlExist === false) {
                 $this->requestedPath = '/notFound';
             }
@@ -120,7 +125,6 @@ class Router
     {
 
         $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
-
         if($routesFile === false) {
             throw new Exception("Fichier non trouvé");
         }

@@ -24,12 +24,17 @@
         "method" : "inputPassword",
         "name" : "app_password_user"
     },
-    "/product" : {
+    "/products" : {
         "controller" : "App\\Controller\\ProductController",
         "method" : "home",
         "name" : "app_product"
     },
-    "/product/create" : {
+    "/products/detail" : {
+        "controller" : "App\\Controller\\ProductController",
+        "method" : "description",
+        "name" : "app_product_detail"
+    },
+    "/products/create" : {
         "controller" : "App\\Controller\\ProductController",
         "method" : "createProduct",
         "name" : "app_product_create"

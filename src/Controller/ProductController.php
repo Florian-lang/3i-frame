@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\User;
 use iFrame\Controller\AbstractController;
+use iFrame\Entity\Constant;
 use iFrame\Entity\RedirectResponse;
 use iFrame\Entity\Response;
 
@@ -31,8 +32,8 @@ class ProductController extends AbstractController
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $tmpFilePath = $_FILES['image']['tmp_name'];
 
-            $newFilePath = './assets/images_upload/products/' . basename($_FILES['image']['name']);
-            move_uploaded_file($tmpFilePath, $newFilePath);               
+            $newFilePath = 'products/' . basename($_FILES['image']['name']);
+            move_uploaded_file($tmpFilePath, Constant::ASSET_IMAGE.$newFilePath);               
             
         }
        
@@ -47,6 +48,21 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product');  
 
+    }
+
+    public function description(): Response{
+        $product = $this->em->getRepository(Product::class)->find($_GET['id']);
+
+        if($product instanceof Product)
+        {
+            return $this->renderView('product/description.php', [
+                'title' => 'Accueil',
+                'content' => 'Je suis le contenu de la page',
+                'product' => $product
+            ]);
+        }
+        
+        return $this->redirectToRoute('app_error_404');
     }
 
 }

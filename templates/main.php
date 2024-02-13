@@ -13,7 +13,7 @@
 		<script type="module" src="../assets/js/app.js"></script>
 		<title> <?= $data['title'] ?> </title>
 	</head>
-	<body class="w-10/12 ml-64 mt-12">
+	<body class="lg:w-9/12 lg:ml-64 mt-12">
 		<?php
 		include_once __DIR__."/_header.php";
 		include_once __DIR__."/_sidebar.php";

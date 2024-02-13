@@ -125,12 +125,6 @@ class Router
     {
 
         $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
-
-        $params = "?";
-        foreach($parameters as $key => $value)
-        {
-            $params.='&'.$key.'='.$value;
-        }
         if($routesFile === false) {
             throw new Exception("Fichier non trouvé");
         }

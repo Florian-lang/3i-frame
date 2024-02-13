@@ -1,5 +1,6 @@
 <?php
 
+use iFrame\Entity\Constant;
 use iFrame\Router\Router;
 ?>
 <div class="grid grid-cols-1 px-4 mx-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900 w-full">
@@ -40,7 +41,7 @@ use iFrame\Router\Router;
             <?php foreach ($data['products'] as $product) { ?>
                 <div class="w-full h-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="<?= Router::generate('app_product_detail',["id" => $product->getId()]) ?>">
-                        <img class="rounded-t-lg w-64 h-64 object-contain" src="<?=  URL_IMAGE.$product->getImage() ?>" alt="product image" />
+                        <img class="rounded-t-lg w-64 h-64 object-contain" src="<?=   Constant::URL_IMAGE.$product->getImage() ?>" alt="product image" />
                     </a>
                     <div class="px-5 pb-5">
                         <a href="#">

@@ -1,5 +1,6 @@
 <?php
 
+use iFrame\Entity\Constant;
 use iFrame\Router\Router;
 ?>
 <div class="grid grid-cols-1 px-4 mx-4 pt-6 xl:grid-cols-2 xl:gap-4 dark:bg-gray-900 w-full">
@@ -46,7 +47,7 @@ use iFrame\Router\Router;
             <!-- Utilise une classe spécifique pour la zone de détails du produit -->
             <div class="w-full grid grid-cols-2">
                 <!-- Photo du produit à gauche -->
-                <img class="rounded-t-lg " src="<?= URL_IMAGE . $data["product"]->getImage() ?>" alt="product image" />
+                <img class="rounded-t-lg " src="<?=  Constant::URL_IMAGE . $data["product"]->getImage() ?>" alt="product image" />
 
                 <!-- Détails du produit -->
                 <div class="px-5 pb-5 space-y-8">

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\User;
 use iFrame\Controller\AbstractController;
+use iFrame\Entity\Constant;
 use iFrame\Entity\RedirectResponse;
 use iFrame\Entity\Response;
 
@@ -32,7 +33,7 @@ class ProductController extends AbstractController
             $tmpFilePath = $_FILES['image']['tmp_name'];
 
             $newFilePath = 'products/' . basename($_FILES['image']['name']);
-            move_uploaded_file($tmpFilePath, ASSET_IMAGE.$newFilePath);               
+            move_uploaded_file($tmpFilePath, Constant::ASSET_IMAGE.$newFilePath);               
             
         }
        

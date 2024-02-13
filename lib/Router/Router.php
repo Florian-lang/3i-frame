@@ -76,22 +76,17 @@ class Router
     private function parseRoutes(): void
     {
         $explodedRequestedPath = $this->explodePath($this->requestedPath);
-        $params = [];
 
         foreach ($this->routePaths as $routePath) {
-
             $foundMatch = true;
-
             $explodedRoutePaths = $this->explodePath($routePath);
 
             if (count($explodedRoutePaths) === count($explodedRequestedPath)) {
 
                 foreach ($explodedRequestedPath as $key => $requestedPathPart) {
                     $candidatePathPart = $explodedRoutePaths[$key];
-                    
-                    if ($this->isParam($candidatePathPart)) {
-                        $params[substr($candidatePathPart, 1, -1)] = $requestedPathPart;
-                    } elseif ($candidatePathPart !== $requestedPathPart) {
+
+                    if ($candidatePathPart !== $requestedPathPart) {
                         $foundMatch = false;
                         break;
                     }
@@ -107,9 +102,10 @@ class Router
 
             }
         }
+
         if (isset($route) && is_array($route)) {
             $controller = new $route['controller']();
-            $controller->{$route['method']}(...$params);
+            $controller->{$route['method']}();
         }
 
     }
@@ -122,15 +118,10 @@ class Router
         return explode("/", rtrim(ltrim($path, '/'), '/'));
     }
 
-    private function isParam(string $candidatePathPart): bool
-    {
-        return str_contains($candidatePathPart, '{') && str_contains($candidatePathPart, '}');
-    }
-
     /**
-     * @param mixed[] $parameters
+     * @param array<string, mixed> $params
      */
-    public static function generate(?string $routeName = null,array $parameters = []): string
+    public static function generate(?string $routeName = null, array $params = []): string
     {
 
         $routesFile = file_get_contents(dirname(__DIR__) . '/../config/routes.json');
@@ -155,11 +146,18 @@ class Router
 
         foreach ($data as $url => $parameters) {
             if ($parameters["name"] === $routeName) {
-                return $url.$params;
+
+                if(!empty($params)) {
+                    $url .= '?';
+                    foreach ($params as $key => $value) {
+                        $url .= $key . '=' . $value . '&';
+                    }
+                }
+
+                return $url;
             }
         }
 
-        //TODO : Create view 404
         return '/notFound';
     }
 }

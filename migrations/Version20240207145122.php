@@ -23,6 +23,6 @@ final class Version20240207145122 extends AbstractMigration {
 
     public function down() : void
     {
-        $this->addSql("DROP TABLE IF EXIST \"product\";");
+        $this->addSql("DROP TABLE \"product\";");
     }
 }

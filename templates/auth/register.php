@@ -58,7 +58,7 @@ use iFrame\Router\Router;
                 </div>
                 <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 sm:w-auto dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-primary-800">Create account</button>
                 <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Already have an account? <a href="#" class="text-primary-700 hover:underline dark:text-primary-500">Login here</a>
+                    Already have an account? <a href="<?= Router::generate("app_login") ?>"  class="text-primary-700 hover:underline dark:text-primary-500">Login here</a>
                 </div>
                 <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             </form>

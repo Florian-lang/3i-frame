@@ -5,8 +5,6 @@ use iFrame\Router\Router;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once dirname(__DIR__) . '/lib/autoload.php';
-require_once dirname(__DIR__) . '/constant.php';
-
 
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);

@@ -54,7 +54,7 @@ use iFrame\Router\Router;
                 <a href="<?= Router::generate('app_product') ?>" class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Produits</a>
               </li>
               <li>
-                <a href="{{ "crud/users/" | relURL }}" class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {{ if eq $page_slug "users" }} bg-gray-100 dark:bg-gray-700 {{ end }}">Catégorie</a>
+                <a href="<?= Router::generate('app_category') ?>" class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Catégories</a>
               </li>
             </ul>
           </li>

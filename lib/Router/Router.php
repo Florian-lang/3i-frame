@@ -41,10 +41,10 @@ class Router
         if(isset($_SERVER['REQUEST_URI'])) {
             $urlExist = false;
             //Enlever les potentiels GET dans l'URI
-            $arrayUri = explode("?",$_SERVER['REQUEST_URI']);
+            $arrayUri = explode("?", $_SERVER['REQUEST_URI']);
             $requestUri = $arrayUri[0];
             foreach ($this->routePaths as $route) {
-        
+
                 if($route === $requestUri) {
                     $this->requestedPath =  $requestUri;
 
@@ -63,7 +63,7 @@ class Router
 
                 }
             }
-         
+
             if($urlExist === false) {
                 $this->requestedPath = '/notFound';
             }

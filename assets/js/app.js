@@ -2,3 +2,4 @@
 // We'll only include all the components we create in this file
 
 import './component/home.js';
+import './component/basket.js';

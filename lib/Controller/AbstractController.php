@@ -3,6 +3,7 @@
 namespace iFrame\Controller;
 
 use App\EntityManager\EntityManager;
+use App\Service\ProductService;
 use iFrame\Entity\RedirectResponse;
 use iFrame\Entity\Response;
 use iFrame\Router\Router;
@@ -10,10 +11,12 @@ use iFrame\Router\Router;
 abstract class AbstractController
 {
     protected EntityManager $em;
+    protected ProductService $productService;
 
     public function __construct()
     {
         $this->em = new EntityManager();
+        $this->productService = new ProductService();
     }
 
     /**

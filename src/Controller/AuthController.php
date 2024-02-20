@@ -24,7 +24,7 @@ class AuthController extends AbstractController
 
             if (password_verify($_POST["password"], $user->getPassword())) {
                 $_SESSION['login'] = $_POST['email'];
-                return $this->redirectToRoute('app_home');
+                return $this->redirectToRoute('app_product');
             }
 
             return $this->renderView('auth/login.php', [
@@ -80,7 +80,7 @@ class AuthController extends AbstractController
 
         $_SESSION['login'] = $_POST['email'];
 
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_product');
 
     }
 

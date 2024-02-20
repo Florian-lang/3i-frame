@@ -35,7 +35,9 @@ use iFrame\Router\Router;
         </nav>
         <div class="flex justify-between">
         <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Produits</h1>
+        <?php if(isset($data['user']) && $data['user']->getRole() == "admin"){ ?>
         <a href="<?= Router::generate('app_product_create') ?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ajouter un produit</a>
+        <?php } ?>
         </div>
         <div class="grid grid-cols-4 gap-4 my-4">
             <?php foreach ($data['products'] as $product) { ?>

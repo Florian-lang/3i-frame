@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\User;
 use iFrame\Controller\AbstractController;
 use iFrame\Entity\Response;
 
@@ -10,11 +11,13 @@ class CategoryController extends AbstractController
 {
     public function home(): Response{
         $categories = $this->em->getRepository(Category::class)->findAll();
+        $user = isset($_SESSION['login']) ? $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]) : null;
 
         return $this->renderView('category/home.php', [
             'title' => 'Accueil',
             'content' => 'Je suis le contenu de la page',
-            'categories' => $categories
+            'categories' => $categories,
+            'user' => $user
         ]);
     }
 

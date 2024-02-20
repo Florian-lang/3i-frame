@@ -56,7 +56,7 @@ use iFrame\Router\Router;
                     <p class="text-5xl font-semibold mb-4 text-gray-700 dark:text-white"><?= $data["product"]->getPrice() . "€" ?></p>
                     <p class="text-xl font-semibold mb-4 text-black-900 dark:text-white">En stock :<span id="stock" value="<?= $data["stock"]->getNumber() ?>"> <?= $data["stock"]->getNumber() ?> </span> restant(s)</p>
 
-                    <?php if($data['user']->getRole() == "customer"){ ?>
+                    <?php if(isset($data['user']) && $data['user']->getRole() == "customer"){ ?>
                     <div class="flex justify-center items-center border-gray-100">
                         <span class="cursor-pointer rounded-l text-4xl bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50" onclick="less()"> - </span>
                         <input class="w-32 py-1 border bg-white text-4xl text-center  outline-none" type="string" value="0" min="0" id="quantity" />
@@ -69,8 +69,8 @@ use iFrame\Router\Router;
                         </svg>
                         Ajouter au panier
                     </button>
-<? } ?>
-                    <?php if($data['user']->getRole() == "admin"){ ?>
+                    <?php } ?>
+                    <?php if(isset($data['user']) && $data['user']->getRole() == "admin"){ ?>
 
                     
                     Changer le stock :

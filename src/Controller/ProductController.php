@@ -14,11 +14,13 @@ class ProductController extends AbstractController
     public function home(): Response
     {
         $products = $this->em->getRepository(Product::class)->findAll();
+        $user = isset($_SESSION['login']) ? $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]) : null;
 
         return $this->renderView('product/home.php', [
             'title' => 'Accueil',
             'content' => 'Je suis le contenu de la page',
-            'products' => $products
+            'products' => $products,
+            'user' => $user
         ]);
     }
 
@@ -74,7 +76,7 @@ class ProductController extends AbstractController
        
         if($product instanceof Product)
         {
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
+            $user = isset($_SESSION['login']) ? $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]) : null;
 
             return $this->renderView('product/description.php', [
                 'title' => 'Accueil',

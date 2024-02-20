@@ -22,7 +22,9 @@ final class Version20240204154210 extends AbstractMigration {
             city VARCHAR(255),
             postal_code VARCHAR(20),
             phone VARCHAR(20),
-            image VARCHAR(255));"
+            role VARCHAR(255),
+            image VARCHAR(255)
+            );"
         );
     }
 

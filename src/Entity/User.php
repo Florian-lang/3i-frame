@@ -14,6 +14,7 @@ class User
     private ?string $city;
     private ?string $postal_code;
     private ?string $phone;
+    private string $role;
     private ?string $image;
 
     public function getId(): int
@@ -127,6 +128,18 @@ class User
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+        return $this;
+    }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
+
         return $this;
     }
 

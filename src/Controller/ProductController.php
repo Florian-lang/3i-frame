@@ -72,11 +72,14 @@ class ProductController extends AbstractController
        
         if($product instanceof Product)
         {
+            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
+
             return $this->renderView('product/description.php', [
                 'title' => 'Accueil',
                 'content' => 'Je suis le contenu de la page',
                 'product' => $product,
-                'stock' => $stock
+                'stock' => $stock,
+                'user' => $user
             ]);
         }
         

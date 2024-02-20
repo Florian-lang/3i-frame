@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Entity\Stock;
 use App\Entity\User;
 use iFrame\Controller\AbstractController;
 use iFrame\Entity\Constant;
@@ -13,11 +14,13 @@ class ProductController extends AbstractController
     public function home(): Response
     {
         $products = $this->em->getRepository(Product::class)->findAll();
+        $user = isset($_SESSION['login']) ? $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]) : null;
 
         return $this->renderView('product/home.php', [
             'title' => 'Accueil',
             'content' => 'Je suis le contenu de la page',
-            'products' => $products
+            'products' => $products,
+            'user' => $user
         ]);
     }
 
@@ -44,22 +47,43 @@ class ProductController extends AbstractController
             "price" => $_POST['price'],
             "category_id" => $_POST['category_id'] === "" ? null : $_POST['category_id'],
             "image" => $newFilePath ?? null,
-
         ]);
 
-        return $this->redirectToRoute('app_product');
+        //TODO : Récupérer l'id de l'objet qu'on a crée sans rappeler la méthode findOneBy
+
+        /**
+            * @var Product
+        */
+        $product = $this->em->getRepository(Product::class)->findOneBy([
+            "name" => $_POST['name'],
+            "description" => $_POST['description'],
+            "price" => $_POST['price'],
+        ]);
+        
+        $this->em->getRepository(Stock::class)->add([
+            "id" => $product->getId(),
+            "number" => $_POST['stock'] ?? 0,
+        ]);
+        
+        return $this->redirectToRoute('app_product');  
 
     }
 
     public function description(): Response
     {
         $product = $this->em->getRepository(Product::class)->find($_GET['id']);
+        $stock = $this->em->getRepository(Stock::class)->find($_GET['id']);
+       
+        if($product instanceof Product)
+        {
+            $user = isset($_SESSION['login']) ? $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]) : null;
 
-        if($product instanceof Product) {
             return $this->renderView('product/description.php', [
                 'title' => 'Accueil',
                 'content' => 'Je suis le contenu de la page',
-                'product' => $product
+                'product' => $product,
+                'stock' => $stock,
+                'user' => $user
             ]);
         }
 

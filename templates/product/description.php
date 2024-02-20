@@ -47,19 +47,20 @@ use iFrame\Router\Router;
             <!-- Utilise une classe spécifique pour la zone de détails du produit -->
             <div class="w-full grid grid-cols-2">
                 <!-- Photo du produit à gauche -->
-                <img class="rounded-t-lg " src="<?=  Constant::URL_IMAGE . $data["product"]->getImage() ?>" alt="product image" />
+                <img class="rounded-t-lg " src="<?= Constant::URL_IMAGE . $data["product"]->getImage() ?>" alt="product image" />
 
                 <!-- Détails du produit -->
                 <div id="detail-product" data-product-id="<?= $product->getId(); ?>" class="px-5 pb-5 space-y-8">
                     <h1 class="text-4xl font-semibold mb-2 text-gray-900 dark:text-white"><?= $data["product"]->getName() ?></h1>
                     <p class="text-xl font-semibold mb-4 text-black-900 dark:text-white"><?= $data["product"]->getDescription() ?></p>
                     <p class="text-5xl font-semibold mb-4 text-gray-700 dark:text-white"><?= $data["product"]->getPrice() . "€" ?></p>
+                    <p class="text-xl font-semibold mb-4 text-black-900 dark:text-white">En stock :<span id="stock_product" value="<?= $data["stock"]->getNumber() ?>"> <?= $data["stock"]->getNumber() ?> </span> restant(s)</p>
 
+                    <?php if(isset($data['user']) && $data['user']->getRole() == "customer"){ ?>
                     <div class="flex justify-center items-center border-gray-100">
                         <span class="cursor-pointer rounded-l text-4xl bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50" onclick="less()"> - </span>
-                        <input id="quantity" class="w-32 py-1 border bg-white text-4xl text-center  outline-none" type="string" value="0" min="0" id="quantity"/>
+                        <input class="w-32 py-1 border bg-white text-4xl text-center  outline-none" type="string" value="0" min="0" id="quantity" />
                         <span class="cursor-pointer rounded-r text-4xl bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50" onclick="more()"> + </span>
-
                     </div>
 
                     <button id="add-to-basket" class="flex w-full justify-center items-center gap-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -68,37 +69,29 @@ use iFrame\Router\Router;
                         </svg>
                         Ajouter au panier
                     </button>
+                    <?php } ?>
+                    <?php if(isset($data['user']) && $data['user']->getRole() == "admin"){ ?>
 
+                    
+                    Changer le stock :
 
-
-                        <!-- Ajoute ici d'autres détails du produit si nécessaire -->
+                    <div class="flex justify-center items-center gap-4  border-gray-100">
+                        <span class="cursor-pointer rounded-l text-lg bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50" id="remove-to-stock">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+                            </svg>
+                            Retirer du stock
+                        </span>
+                        <span class="cursor-pointer rounded-l text-lg bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"  id="add-to-stock">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                            </svg>
+                            Ajouter au stock
+                        </span>
+                    </div>
+                <?php } ?>
                 </div>
-
-
-            </div>
-            <!-- Ajoute ici la logique pour afficher les détails du produit -->
-            <div class="max-w-lg">
-                <!-- Détails supplémentaires du produit -->
-                <!-- Exemple : Description, catégorie, etc. -->
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    function less()
-    {
-        let quantity = document.getElementById('quantity');
-
-        if(quantity.value > 0)
-        {
-            quantity.value--;
-        }
-    }
-    function more()
-    {
-        let quantity = document.getElementById('quantity');
-        quantity.value++
-
-    }
-</script>

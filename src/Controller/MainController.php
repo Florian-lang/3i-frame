@@ -10,7 +10,7 @@ class MainController extends AbstractController
 {
     public function home(): Response
     {
-        $user = $this->em->getRepository(User::class)->find(2);
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $_SESSION['login']]);
 
         if($user instanceof User) {
 

@@ -44,6 +44,21 @@
         "method" : "createProduct",
         "name" : "app_product_create"
     },
+    "/stocks/update" : {
+        "controller" : "App\\Controller\\StockController",
+        "method" : "updateStock",
+        "name" : "app_stock_update"
+    },
+    "/categories" : {
+        "controller" : "App\\Controller\\CategoryController",
+        "method" : "home",
+        "name" : "app_category"
+    },
+    "/categories/create" : {
+        "controller" : "App\\Controller\\CategoryController",
+        "method" : "createCategory",
+        "name" : "app_category_create"
+    },
     "/login" : {
         "controller" : "App\\Controller\\AuthController",
         "method" : "login",

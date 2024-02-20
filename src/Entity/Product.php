@@ -53,7 +53,7 @@ class Product
         $this->price = $price;
         return $this;
     }
-   
+
     public function getImage(): ?string
     {
         return $this->image;

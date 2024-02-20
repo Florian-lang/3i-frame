@@ -4,7 +4,10 @@ namespace iFrame\Entity;
 
 class JsonResponse extends Response
 {
-    public function __construct(?string $content = null, int $status = Response::HTTP_OK)
+    /**
+     * @param mixed[] $content
+     */
+    public function __construct(array $content = [], int $status = Response::HTTP_OK)
     {
         $encodedContent = json_encode($content);
 

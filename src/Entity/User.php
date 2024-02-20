@@ -153,4 +153,13 @@ class User
         $this->image = $image;
         return $this;
     }
+
+    public function addProductToBasket(int $productId, int $quantity): void
+    {
+        if(isset($_SESSION['basket'][$productId])) {
+            $_SESSION['basket'][$productId] += $quantity;
+        } else {
+            $_SESSION['basket'][$productId] = $quantity;
+        }
+    }
 }

@@ -34,6 +34,11 @@
         "method" : "description",
         "name" : "app_product_detail"
     },
+    "/products/basket" : {
+        "controller" : "App\\Controller\\ProductController",
+        "method" : "addToBasket",
+        "name" : "app_product_basket"
+    },
     "/products/create" : {
         "controller" : "App\\Controller\\ProductController",
         "method" : "createProduct",

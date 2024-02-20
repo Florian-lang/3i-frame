@@ -54,7 +54,7 @@ use iFrame\Router\Router;
                     <h1 class="text-4xl font-semibold mb-2 text-gray-900 dark:text-white"><?= $data["product"]->getName() ?></h1>
                     <p class="text-xl font-semibold mb-4 text-black-900 dark:text-white"><?= $data["product"]->getDescription() ?></p>
                     <p class="text-5xl font-semibold mb-4 text-gray-700 dark:text-white"><?= $data["product"]->getPrice() . "€" ?></p>
-                    <p class="text-xl font-semibold mb-4 text-black-900 dark:text-white">En stock :<span id="stock" value="<?= $data["stock"]->getNumber() ?>"> <?= $data["stock"]->getNumber() ?> </span> restant(s)</p>
+                    <p class="text-xl font-semibold mb-4 text-black-900 dark:text-white">En stock :<span id="stock_product" value="<?= $data["stock"]->getNumber() ?>"> <?= $data["stock"]->getNumber() ?> </span> restant(s)</p>
 
                     <?php if(isset($data['user']) && $data['user']->getRole() == "customer"){ ?>
                     <div class="flex justify-center items-center border-gray-100">
@@ -76,13 +76,13 @@ use iFrame\Router\Router;
                     Changer le stock :
 
                     <div class="flex justify-center items-center gap-4  border-gray-100">
-                        <span class="cursor-pointer rounded-l text-lg bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50" onclick="stockChange('decrease')">
+                        <span class="cursor-pointer rounded-l text-lg bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50" id="remove-to-stock">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
                             </svg>
                             Retirer du stock
                         </span>
-                        <span class="cursor-pointer rounded-l text-lg bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50" onclick="stockChange('increase')">
+                        <span class="cursor-pointer rounded-l text-lg bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"  id="add-to-stock">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
                             </svg>
@@ -95,47 +95,3 @@ use iFrame\Router\Router;
         </div>
     </div>
 </div>
-
-<script>
-    function less() {
-        let quantity = document.getElementById('quantity');
-
-        if(quantity.value > 0)
-        {
-            quantity.value--;
-        }
-    }
-
-    function more() {
-        let quantity = document.getElementById('quantity');
-        quantity.value++
-
-    }
-
-    function stockChange(action) {
-        var quantityElement = document.getElementById('stock');
-        var quantity = parseInt(quantityElement.getAttribute('value'));
-        // Si l'action est "increase", augmentez la quantité, sinon diminuez-la
-        if (action === 'increase') {
-            quantity++;
-        } else if (action === 'decrease' && quantity > 0) {
-            quantity--;
-        }
-
-        // Envoyer la requête AJAX à StockController pour mettre à jour la quantité en stock
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', "<?= Router::generate('app_stock_update') ?>", true); // Utilisez l'URL appropriée pour votre application
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.setRequestHeader('X-CSRF-Token', "<?= $_SESSION['csrf_token'] ?>");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-
-                // Mettre à jour l'interface utilisateur avec la nouvelle quantité en stock
-                quantityElement.setAttribute('value', xhr.responseText);
-                quantityElement.textContent = xhr.responseText;
-            }
-        };
-        // Envoyer l'ID du produit et la nouvelle quantité en stock avec les données
-        xhr.send('productId=<?= $data["product"]->getId() ?>&stock=' + quantity + '&csrf_token=<?= $_SESSION['csrf_token'] ?>');
-    }
-</script>
